@@ -94,3 +94,11 @@ class StorageHandler:
             if sample:
                 return sample.to_pydantic()
             return None
+        
+    def reset_errors(self, job_id):
+        """
+        Resets the processed flag for all samples in a job that have an error.
+        """
+        with self.Session() as session:
+            session.query(RunnerSampleDB).filter_by(job_id=job_id, error=True).update({'processed': False, 'error': None})
+            session.commit()

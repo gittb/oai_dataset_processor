@@ -13,12 +13,10 @@ import json
 
 
 class OpenAIDatasetProcessor:
-    def __init__(self, base_url, api_key, workers:int, storage_handler: StorageHandler=None):
+    def __init__(self, base_url, api_key, workers:int, db_url: str=None):
         self.create_async_client(base_url, api_key)
-        if storage_handler is None:
-            self.storage_handler = StorageHandler()
-        else:
-            self.storage_handler = storage_handler
+        self.storage_handler = StorageHandler(db_url=db_url)
+
         self.workers = workers
 
     def create_async_client(self, base_url, api_key):
@@ -63,6 +61,14 @@ class OpenAIDatasetProcessor:
         """
         return self.storage_handler.get_jobs()
 
+    def reset_errors(self, job_id: str):
+        """
+        Resets the error status of all samples associated with a specific job ID.
+        Parameters:
+            job_id (str): The ID of the job for which to reset the error status.
+        """
+        self.storage_handler.reset_errors(job_id)
+
     async def run_sample(self, sample:RunnerSample):
         try:
             chat_completion = await self.client.chat.completions.create(
@@ -89,8 +95,7 @@ class OpenAIDatasetProcessor:
 
     def run_job(self, job_id: str) -> JobResult:
         """
-        Converts the async 'run_job' method into a synchronous function that still runs
-        async logic internally using asyncio.run.
+        Processes all unprocessed samples associated with a specific job ID. 
 
         Parameters:
             job_id (str): The ID of the job to process. Used to fetch the relevant samples from the database.
