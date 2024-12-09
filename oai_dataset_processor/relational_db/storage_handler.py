@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from .orm_layout import Base, RunnerSampleDB
-from dataset_processor.models.sample_types import RunnerSample, JobResult
+from oai_dataset_processor.models.sample_types import RunnerSample, JobResult
 from typing import Dict, List, Union
 import os
 

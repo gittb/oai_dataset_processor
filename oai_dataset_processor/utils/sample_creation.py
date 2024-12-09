@@ -1,4 +1,4 @@
-from dataset_processor.models.sample_types import RunnerSample
+from oai_dataset_processor.models.sample_types import RunnerSample
 
 def create_runner_sample(
         job_id:str,

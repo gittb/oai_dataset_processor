@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, JSON, Boolean, Text
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
 
-from dataset_processor.models.sample_types import RunnerSample
+from oai_dataset_processor.models.sample_types import RunnerSample
 
 Base = declarative_base()
 

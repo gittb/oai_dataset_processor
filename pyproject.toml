@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "dataset_processor"
+name = "oai_dataset_processor"
 version = "0.1.0"
 description = "A sample dataset processor for evaluating datasets."
 authors = [{name = "Ben Gitter", email = "gitterbd@gmail.com"}]

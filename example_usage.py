@@ -1,4 +1,4 @@
-from dataset_processor import OpenAIDatasetProcessor, create_runner_sample
+from oai_dataset_processor import OpenAIDatasetProcessor, create_runner_sample
 from pydantic import BaseModel
 
 # Configuring the sample data, some instructions and a target schema to fill

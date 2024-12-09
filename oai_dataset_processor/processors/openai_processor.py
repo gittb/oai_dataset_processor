@@ -3,10 +3,10 @@ from openai import AsyncOpenAI
 from typing import List, Dict
 from tqdm.asyncio import tqdm_asyncio
 
-from dataset_processor.models.sample_types import RunnerSample, JobResult
+from oai_dataset_processor.models.sample_types import RunnerSample, JobResult
 
-from dataset_processor.relational_db.storage_handler import StorageHandler
-from dataset_processor.relational_db.orm_layout import RunnerSampleDB
+from oai_dataset_processor.relational_db.storage_handler import StorageHandler
+from oai_dataset_processor.relational_db.orm_layout import RunnerSampleDB
 
 import asyncio
 import json
