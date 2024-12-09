@@ -34,6 +34,7 @@ for idx, samp in enumerate(input_samples):
     samples.append(sample)
 
 runner = OpenAIDatasetProcessor(
+    # db_url="sqlite://", # Optional, oai_dataset_processor will create an sqlite db in your root directory if you don't add one
     base_url="YOUR_BASE_URL_HERE",
     api_key="YOUR_API_KEY_HERE",
     workers=20
