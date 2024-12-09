@@ -7,8 +7,10 @@ import os
 
 class StorageHandler:
     def __init__(self, db_url=None):
-
-        # Define default behavior if db_url is not provided
+        """
+        Initializes the StorageHandler with a database URL.
+        If no URL is provided, it defaults to a SQLite database in the current working directory.
+        """
         if db_url is None:
             base_dir = os.path.join(os.getcwd(), "DatasetProcessorDB")
             os.makedirs(base_dir, exist_ok=True)
@@ -19,6 +21,9 @@ class StorageHandler:
         self.Session = sessionmaker(bind=self.engine)
 
     def save_sample_to_db(self, sample: RunnerSample):
+        """
+        Saves a RunnerSample object to the database.
+        """
         with self.Session() as session:
             existing = session.query(RunnerSampleDB).filter_by(id=sample.id).first()
             if not existing:
@@ -42,6 +47,9 @@ class StorageHandler:
             return JobResult(job_id=job_id, samples=pydantic_samples)
 
     def add_bulk_pydantic_samples(self, samples: RunnerSample):
+        """
+        Adds multiple RunnerSample objects to the database.
+        """
         for sample in samples:
             db_sample = RunnerSampleDB.from_pydantic(sample)
             self.save_sample_to_db(db_sample)
