@@ -1,5 +1,0 @@
-openai
-tqdm
-pandas
-sqlalchemy
-pydantic

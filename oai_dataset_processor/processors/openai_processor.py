@@ -10,6 +10,13 @@ from oai_dataset_processor.relational_db.orm_layout import RunnerSampleDB
 
 import asyncio
 import json
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 
 class OpenAIDatasetProcessor:
@@ -149,7 +156,7 @@ class OpenAIDatasetProcessor:
             # Wait for tasks to complete with a progress bar
             await tqdm_asyncio.gather(*tasks, desc="Processing Samples", total=len(job_samples.samples))
 
-            print(f"Processed {len(job_samples.samples)} samples for job {job_id}.")
+            logger.info(f"Processed {len(job_samples.samples)} samples for job {job_id}.")
 
             # Return the list of processed samples
             return JobResult(job_id=job_id, samples=job_samples.samples)
