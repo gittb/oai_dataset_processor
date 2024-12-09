@@ -13,13 +13,33 @@ import json
 
 
 class OpenAIDatasetProcessor:
-    def __init__(self, base_url, api_key, workers:int, db_url: str=None):
+    """
+    A class to handle the processing of datasets using OpenAI's API.
+    """
+
+    def __init__(self, base_url, api_key, workers:int, db_url: str=None, client_kwargs: Dict=None):
+        """
+        Initializes the OpenAIDatasetProcessor with the provided base URL, API key, number of workers, and optional database URL.
+        Parameters:
+            base_url (str): The base URL for the OpenAI API.
+            api_key (str): The API key for authentication with the OpenAI API.
+            workers (int): The number of concurrent workers to use for processing.
+            db_url (str, optional): The URL for the database to store and retrieve samples. Defaults to None.
+        """
+
         self.create_async_client(base_url, api_key)
         self.storage_handler = StorageHandler(db_url=db_url)
+        self.client_kwargs = client_kwargs or {}
 
         self.workers = workers
 
     def create_async_client(self, base_url, api_key):
+        """
+        Creates an asynchronous client for the OpenAI API.
+        Parameters:
+            base_url (str): The base URL for the OpenAI API.
+            api_key (str): The API key for authentication with the OpenAI API.
+        """
         self.client = AsyncOpenAI(
             base_url=base_url,
             api_key=api_key
@@ -70,15 +90,22 @@ class OpenAIDatasetProcessor:
         self.storage_handler.reset_errors(job_id)
 
     async def run_sample(self, sample:RunnerSample):
+        """
+        Asynchronously processes a single RunnerSample instance using the OpenAI API.
+        Parameters:
+            sample (RunnerSample): The RunnerSample instance to be processed.
+        Returns:
+            RunnerSample: The processed RunnerSample instance with the response and error fields updated.
+        """
         try:
             chat_completion = await self.client.chat.completions.create(
                 messages=sample.conversation,
-                temperature=0,
                 model=sample.model_name,
                 response_format={
                     "type": "json_schema",
                     "json_schema": {"name": "target", "schema": sample.target_format},
                 },
+                **self.client_kwargs,  # Pass any additional client kwargs here if needed. E.g., max_tokens, etc.
             )
             message = chat_completion.choices[0].message.content
             
