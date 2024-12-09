@@ -1,9 +1,3 @@
-Based on the features described and the purpose of the package, a suitable name would be **"OpenAI Job Processor"** or **"BulkAI Runner"**. These names emphasize its role as a bulk processor that leverages OpenAI-compatible endpoints for efficiently handling jobs and samples.
-
-Here’s a short README to go along with it:
-
----
-
 # OAI Dataset Processor
 
 **OAI Dataset Processor** is a modular, scalable, and fault-tolerant framework designed for processing large datasets or tasks using OpenAI-compatible endpoints. It provides robust support for job persistence through SQL databases, effective task distribution with worker limits, and smooth integration of JSON schema-based output validation.
