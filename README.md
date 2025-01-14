@@ -19,7 +19,7 @@ pip install oai-dataset-processor
 ## Quick Start
 
 ```python
-from dataset_processor import OpenAIDatasetProcessor, create_runner_sample
+from oai_dataset_processor import OpenAIDatasetProcessor, create_runner_sample
 from pydantic import BaseModel
 
 # Define output schema
